@@ -15,8 +15,10 @@ class TextFieldWidget extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              onSubmitted: (value) {
-                cubit.sendMessage(controller.text);
+              onSubmitted: (value) async {
+                cubit.insertMessage(controller.text);
+                FocusManager.instance.primaryFocus?.unfocus();
+                await cubit.sendMessage(controller.text, controller);
               },
               controller: controller,
               decoration:
@@ -25,9 +27,10 @@ class TextFieldWidget extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () {
-              cubit.sendMessage(controller.text);
-              controller.clear();
+            onPressed: () async {
+              cubit.insertMessage(controller.text);
+              FocusManager.instance.primaryFocus?.unfocus();
+              await cubit.sendMessage(controller.text, controller);
             },
           ),
         ],
