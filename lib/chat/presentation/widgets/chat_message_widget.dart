@@ -13,18 +13,26 @@ class ChatMessage extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(right: 16.0),
-          child: CircleAvatar(
-            child: Text(sender[0]),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: sender == "user" ? Colors.lightGreenAccent : Colors.green[200]
+
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(sender,),
+            ),
           ),
         ),
         Expanded(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(sender, style: Theme.of(context).textTheme.subtitle1),
               Container(
                 margin: const EdgeInsets.only(top: 5.0),
-                child: Text(text),
+                child: Text(text, textAlign: TextAlign.center,),
               ),
             ],
           ),

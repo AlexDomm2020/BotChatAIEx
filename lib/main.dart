@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       home: BlocProvider(
-        create: (context) => ChatGptCubit(OpenAI.instance.build(token: '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')),
+        create: (context) => ChatGptCubit(OpenAI.instance.build(token: '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')),
         child: ChatScreen(),
       ),
     );
