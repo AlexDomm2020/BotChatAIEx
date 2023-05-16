@@ -4,8 +4,8 @@ class ChatMessage extends StatelessWidget {
   const ChatMessage({Key? key, required this.text, required this.sender})
       : super(key: key);
 
-  final String text;
-  final String sender;
+  final String? text;
+  final String? sender;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class ChatMessage extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: sender == "user" ? Colors.lightGreenAccent : Colors.green[200]
+              color: sender == "user prueba" ? Colors.lightGreenAccent : Colors.green[200]
 
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(sender,),
+              child: Text(sender ?? "No text found",),
             ),
           ),
         ),
@@ -32,7 +32,7 @@ class ChatMessage extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 5.0),
-                child: Text(text, textAlign: TextAlign.center,),
+                child: Text(text ?? "No text found", textAlign: TextAlign.start,),
               ),
             ],
           ),

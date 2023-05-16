@@ -1,26 +1,31 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_gpt_app/chat/domain/message_model.dart';
+import 'package:chat_gpt_app/chat/data/repositories_implementations/openai_repository_impl.dart';
+import 'package:chat_gpt_app/chat/domain/models/message_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 
 part 'chat_gpt_state.dart';
 
 class ChatGptCubit extends Cubit<ChatGptState> {
-  ChatGptCubit(this.openAI) : super(ChatGptInitial());
+  ChatGptCubit(this.openAIRepositoryImpl) : super(ChatGptInitial());
 
-  final OpenAI openAI;
+  final OpenAIRepositoryImpl openAIRepositoryImpl;
   final List<MessageModel?> _messages = [];
 
-  Future sendMessage(String message) async {
-    _messages.insert(0, MessageModel("user", message));
-    emit(ChatGptRequestResponse(_messages));
+  void insertMessage(String message){
+    _messages.insert(0, MessageModel("user prueba", message));
+    emit(ChatGptGetUpdatedList(_messages, isTyping: true));
+  }
+
+  Future sendMessage(String message, TextEditingController controller) async {
+    controller.clear();
     final request = CompleteText(prompt: message, maxTokens: 200, model: kTextDavinci3);
-    emit(ChatGptLoadingRequest());
     try{
-      final response = await openAI.onCompletion(request: request);
-      _messages.insert(0, MessageModel("chatGpt", response!.choices[0].text.trim()));
-      emit(ChatGptRequestResponse(_messages));
+      final response = await openAIRepositoryImpl.sendRequest(request);
+      _messages.insert(0, response);
+      emit(ChatGptGetUpdatedList(_messages, isTyping: false));
     }catch(e){
       rethrow;
     }

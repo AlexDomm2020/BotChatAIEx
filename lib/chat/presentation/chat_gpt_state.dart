@@ -14,12 +14,13 @@ class ChatGptLoadingRequest extends ChatGptState {
   List<Object?> get props => [];
 }
 
-class ChatGptRequestResponse extends ChatGptState {
-    ChatGptRequestResponse(this.updatedList);
+class ChatGptGetUpdatedList extends ChatGptState {
+  ChatGptGetUpdatedList(this.updatedList, {this.isTyping = false});
   final List<MessageModel?> updatedList;
+  final bool isTyping;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [updatedList];
+  List<Object?> get props => [updatedList, isTyping];
 }
 
