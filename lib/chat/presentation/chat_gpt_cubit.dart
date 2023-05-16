@@ -15,7 +15,7 @@ class ChatGptCubit extends Cubit<ChatGptState> {
   final List<MessageModel?> _messages = [];
 
   void insertMessage(String message){
-    _messages.insert(0, MessageModel("user prueba", message));
+    _messages.insert(0, MessageModel("user", message));
     emit(ChatGptGetUpdatedList(_messages, isTyping: true));
   }
 

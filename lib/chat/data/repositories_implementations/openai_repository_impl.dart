@@ -9,7 +9,7 @@ class OpenAIRepositoryImpl extends OpenAIRepository {
   Future<MessageModel?> sendRequest(CompleteText request) async {
     try{
       final response = await openAI.onCompletion(request: request);
-      return MessageModel('Peso Pluma', response?.choices[0].text.trim());
+      return MessageModel('ChatBot', response?.choices[0].text.trim());
     }catch(e){
       rethrow;
     }
