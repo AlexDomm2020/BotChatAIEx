@@ -4,6 +4,9 @@ ChatGpt application example.
 
 ## Getting Started
 
+This project needs to add .env file at root package, you can find an example of it in .env.example
+adding OpenAI API Key is needed in order to get the project running
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
