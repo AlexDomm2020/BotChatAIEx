@@ -26,8 +26,8 @@ class TextFieldWidget extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.send),
             onPressed: () {
-              cubit.insertMessage(controller.text);
               cubit.sendMessage(controller.text);
+              controller.clear();
             },
           ),
         ],

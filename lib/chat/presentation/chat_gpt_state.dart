@@ -9,25 +9,17 @@ class ChatGptInitial extends ChatGptState {
   List<Object?> get props => [];
 }
 
-class ChatGptInsert extends ChatGptState {
-  ChatGptInsert(this.messages);
-  final List<String?> messages;
-  @override
-  List<Object?> get props => [messages];
-}
-
 class ChatGptLoadingRequest extends ChatGptState {
   @override
   List<Object?> get props => [];
 }
 
 class ChatGptRequestResponse extends ChatGptState {
-    ChatGptRequestResponse(this.response, this.updatedList);
-  final String? response;
-  final List<String?> updatedList;
+    ChatGptRequestResponse(this.updatedList);
+  final List<MessageModel?> updatedList;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [response];
+  List<Object?> get props => [updatedList];
 }
 

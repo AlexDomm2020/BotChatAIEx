@@ -17,12 +17,12 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Chat Bot Example")),
       body: SafeArea(
-        child: Column(
-          children: [
-            BlocBuilder<ChatGptCubit, ChatGptState>(
-              builder: (context, state) {
-                if (state is ChatGptInitial) {
-                  return Flexible(
+        child: BlocBuilder<ChatGptCubit, ChatGptState>(
+          builder: (context, state) {
+            if (state is ChatGptInitial) {
+              return Column(
+                children: [
+                  Flexible(
                     child: ListView.builder(
                       itemCount: 0,
                       itemBuilder: (context, index) => Padding(
@@ -33,47 +33,37 @@ class ChatScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  );
-                }
-                if (state is ChatGptInsert) {
-                  return Flexible(
+                  ),
+                  TextFieldWidget(controller: _textEditingController),
+                ],
+              );
+            }
+            if (state is ChatGptRequestResponse) {
+              return Column(
+                children: [
+                  Flexible(
                     child: ListView.builder(
-                      itemCount: state.messages.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: SizedBox(
-                          height: 50,
-                          child: Text(state.messages[index]!),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                if (state is ChatGptLoadingRequest) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (state is ChatGptRequestResponse) {
-                  return Flexible(
-                    child: ListView.builder(
+                      reverse: true,
                       itemCount: state.updatedList.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: SizedBox(
-                          height: 50,
-                          child: Text(state.updatedList[index]!),
+                        child: ChatMessage(
+                          text: state.updatedList[index]!.message,
+                          sender: state.updatedList[index]!.sender,
                         ),
                       ),
                     ),
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            ),
-            TextFieldWidget(controller: _textEditingController),
-          ],
+                  ),
+                  state is ChatGptLoadingRequest
+                      ? const CircularProgressIndicator()
+                      : const SizedBox.shrink(),
+                  TextFieldWidget(controller: _textEditingController),
+                ],
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
         ),
       ),
     );
